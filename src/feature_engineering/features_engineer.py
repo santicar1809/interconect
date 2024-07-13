@@ -36,6 +36,7 @@ def correlation(data):
     return selected_columns
 
 def feature_engineer(data):
+    data['cancel']=pd.to_numeric(data['cancel'])
     data_model=data.drop(['customer_id','begin_date','end_date'],axis=1)
     
     one_hot=pd.get_dummies(data_model[['type','payment_method','internet_service']])

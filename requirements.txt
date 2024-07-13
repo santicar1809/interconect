@@ -11,3 +11,5 @@ protobuf
 matplotlib
 plotly
 plotly kaleido
+catboost
+joblib

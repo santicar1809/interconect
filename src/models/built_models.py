@@ -11,12 +11,13 @@ from sklearn.preprocessing import StandardScaler
 from imblearn.over_sampling import SMOTE
 from src.models.hyper_parameters import all_models
 from sklearn.impute import SimpleImputer
+import joblib
 
 def iterative_modeling(data):
     '''This function will bring the hyper parameters from all_model() 
     and wil create a complete report of the best model, estimator, 
     score and validation score'''
-
+    
     models = all_models() 
     
     output_path = './files/modeling_output/model_fit/'
@@ -26,17 +27,20 @@ def iterative_modeling(data):
     results = []
 
     # Iterating the models
-    for model in models:
+    models_name = ['lr','xg','lgbm','rf','cat']
+    for model,i in zip(models,models_name):
         best_estimator, best_score, val_score = model_structure(data, model[1], model[2]) #data, pipeline, param_grid
         results.append([model[0],best_estimator,best_score, val_score])
-
+        
+        joblib.dump(best_estimator,output_path +f'best_random_{i}.joblib')
     results_df = pd.DataFrame(results, columns=['model','best_estimator','best_train_score','validation_score'])
     
-    tf_results = tens_flow(data)    
-    
+    tf_results = tens_flow(data) 
+    #joblib.dump(tf_results[1],output_path +f'best_random_nn.joblib')
+    tf_results[1].save(output_path+'best_random_nn.h5')
     # Concatening logistic models and neuronal network
-    final_rev = pd.concat([results_df,tf_results])
-    final_rev.to_csv(output_path+'model_report.csv',index=False)
+    final_rev = pd.concat([results_df,tf_results[0]])
+    final_rev.to_csv('./files/modeling_output/model_report.csv',index=False)
 
     return final_rev[['model','validation_score']]
 
@@ -44,7 +48,6 @@ def iterative_modeling(data):
 def model_structure(data, pipeline, param_grid):
     '''This function will host the structure to run all the models, splitting the
     dataset, oversampling the data and returning the scores'''
-
     seed=12345
     data_train,data_test=train_test_split(data,random_state=seed,test_size=0.1)
     
@@ -72,9 +75,10 @@ def model_structure(data, pipeline, param_grid):
     # Scores
     best_score = gs.best_score_
     best_estimator = gs.best_estimator_
-    pred_val = gs.predict_proba(features_valid_imp)[:,1]
-    score_val = eval_model(best_estimator,target_valid,pred_val)
+    score_val = eval_model(best_estimator,features_valid_imp,target_valid)
     print(f'AU-ROC: {score_val}')
+    features_test_imp.to_csv('./test/files/features_test.csv',index=False)
+    target_test.to_csv('./test/files/target_test.csv',index=False)
     results = best_estimator, best_score, score_val 
     return results
     
@@ -129,7 +133,7 @@ def tens_flow(data):
     
     # Compiling the model
     model = build_model(features_train_imp.shape[1])
-    optimizer = Adam(learning_rate=0.001)
+    optimizer = Adam(learning_rate=0.0005)
     model.compile(optimizer=optimizer,
                   loss='binary_crossentropy',
                   metrics=[tf.keras.metrics.AUC()])
@@ -150,4 +154,4 @@ def tens_flow(data):
     results = ['Keras',auc_score]
     results_df = pd.DataFrame({'model':[results[0]],'validation_score':[results[1]]})
 
-    return results_df
+    return results_df,model

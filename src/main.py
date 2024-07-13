@@ -1,11 +1,4 @@
-# In case of debugging enable and select your path
 import sys
-# path = 'path_of_the_project'
-# sys.path.append('path_of_the_project')
-# path= '/home/carnivurus/Documents/Tripleten/project17_final'
-# sys.path.append(path)
-
-
 from src.preprocessing.load_data import load_datasets
 from src.preprocessing.preprocess import preprocess_data
 from src.EDA.EDA import eda_report
@@ -13,7 +6,7 @@ from src.feature_engineering.features_engineer import feature_engineer
 from src.models.built_models import iterative_modeling
 import pandas as pd
 
-#def main():
+def main():
     '''This main function progresses through various stages to process data, 
     evaluate variables, and create a robust model for predicting churned users. 
     For more detailed information, please refer to the README.md file. '''
@@ -23,8 +16,8 @@ import pandas as pd
     eda_report(preprocessed_data) # Analysis stage
     processed_data = feature_engineer(preprocessed_data) # Feature engineering stage
     results = iterative_modeling(processed_data) # Modeling stage
-    #return results
+    return results
 
-#results = main()
+results = main()
 
 print(results)

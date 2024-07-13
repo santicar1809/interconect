@@ -1,11 +1,5 @@
-# Files generated
-imputed_df.csv
-merge.csv
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
 
 # C extensions
 *.so
@@ -168,10 +162,8 @@ cython_debug/
 
 *.ipynb
 __pycache__
-*.csv
 *.xlsx
 *.pptx
-*.png
 *.jpeg
 *.jpg
 *.txt

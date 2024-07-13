@@ -1,0 +1,34 @@
+model,best_estimator,best_train_score,validation_score
+Logreg,"Pipeline(steps=[('scale', StandardScaler()),
+                ('logreg',
+                 LogisticRegression(C=0.1, max_iter=10000, solver='saga'))])",0.8321648282066678,0.8350066806642489
+XGboost,"Pipeline(steps=[('scale', StandardScaler()),
+                ('xgboost',
+                 XGBClassifier(base_score=None, booster=None, callbacks=None,
+                               colsample_bylevel=None, colsample_bynode=None,
+                               colsample_bytree=None, device=None,
+                               early_stopping_rounds=None,
+                               enable_categorical=False, eval_metric=None,
+                               feature_types=None, gamma=None, grow_policy=None,
+                               importance_type=None,
+                               interaction_constraints=None, learning_rate=0.01,
+                               max_bin=None, max_cat_threshold=None,
+                               max_cat_to_onehot=None, max_delta_step=None,
+                               max_depth=3, max_leaves=None,
+                               min_child_weight=None, missing=nan,
+                               monotone_constraints=None, multi_strategy=None,
+                               n_estimators=500, n_jobs=None,
+                               num_parallel_tree=None, random_state=1234, ...))])",0.8423105606073935,0.8496786918623147
+LGBM,"Pipeline(steps=[('scale', StandardScaler()),
+                ('lightgbm',
+                 LGBMClassifier(learning_rate=0.01, max_depth=3,
+                                n_estimators=500))])",0.8425216901735189,0.8498282114907426
+Random_Forest,"Pipeline(steps=[('scale', StandardScaler()),
+                ('random_forest',
+                 RandomForestClassifier(max_depth=10, min_samples_leaf=4,
+                                        min_samples_split=10, n_estimators=500,
+                                        random_state=1234))])",0.8358763510364138,0.8472831965387797
+cat,"Pipeline(steps=[('scale', StandardScaler()),
+                ('cat',
+                 <catboost.core.CatBoostClassifier object at 0x000001469B4617F0>)])",0.844922480215403,0.8480896481516829
+Keras,,,0.8377012152446396

@@ -98,7 +98,7 @@ def eval_model(best,features_valid,target_valid):
 def build_model(data):
     model = Sequential([
         Dense(128, activation='relu', input_shape=(data,), kernel_regularizer=tf.keras.regularizers.l2(0.001)),
-        #Dropout(0.3),  # Dropout for regularization
+        Dropout(0.3),  # Dropout for regularization
         Dense(64, activation='relu', input_shape=(data,), kernel_regularizer=tf.keras.regularizers.l2(0.001)),
         #Dropout(0.3),  # Dropout for regularization
         Dense(32, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)),

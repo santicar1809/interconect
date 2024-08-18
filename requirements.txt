@@ -10,6 +10,6 @@ xgboost
 protobuf
 matplotlib
 plotly
-plotly kaleido
+kaleido
 catboost
 joblib

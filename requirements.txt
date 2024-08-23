@@ -13,3 +13,4 @@ plotly
 kaleido
 catboost
 joblib
+statsmodels
